@@ -70,3 +70,36 @@
                 </div>
             </div>
         </div>
+
+       <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const actAudio = new Audio('/assets/act.mp3');
+  const beepAudio = new Audio('/assets/beep.mp3');
+
+  // Optional looping (disable if not needed)
+  actAudio.loop = true;
+
+  function playAudio(type = "act") {
+    if (type === "act") {
+      actAudio.currentTime = 0;
+      actAudio.play().catch(() => {});
+    } else {
+      beepAudio.currentTime = 0;
+      beepAudio.play().catch(() => {});
+    }
+  }
+
+  // Single global click (no duplicates)
+  document.body.addEventListener('click', () => playAudio("act"));
+
+  // Buttons → beep sound
+  document.querySelectorAll('.scan-now').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent double trigger
+      playAudio("beep");
+    });
+  });
+
+});
+</script>
